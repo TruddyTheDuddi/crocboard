@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js" defer></script>
+    <title>Croc-Board</title>
+</head>
+
+<body>
+    <header>
+        <h1>Croc-Board</h1>
+        <p>
+            Grab some fancy parfume, Crocodior or Lancrôque (both are fine), and dive into the mindset of the sumptuous Odile... and make the player give up.
+        </p>
+        <p>
+            Game content building dashboard for creating levels and display some stats for <b>"No, You Won't Speak to the Manager"</b>
+        </p>
+    </header>
+
+    <div class="editor">
+        <hgroup>
+            <h2>Level Builder</h2>
+        </hgroup>
+
+        <div class="editor-text">
+            <hgroup>
+                <h3>Text Input</h3>
+                <p>Compose the main text that will appear in the character's speech bubble.</p>
+            </hgroup>
+            <textarea id="text"></textarea>
+            <small><span id="shortcut-hint"></span> to save the level. You may use <b>**bold**</b> and
+                <i>_italic_</i>.</small>
+        </div>
+
+        <div class="editor-component">
+            <h3>Component</h3>
+            <div class="component-selector">
+                <!-- Radio buttons -->
+                <label>
+                    <input type="radio" name="component" value="empty" checked>
+                    <span>No Component</span>
+                </label>
+                <label>
+                    <input type="radio" name="component" value="btn-single">
+                    <span>One Button</span>
+                </label>
+                <label>
+                    <input type="radio" name="component" value="btn-double">
+                    <span>Choice Buttons</span>
+                </label>
+                <label>
+                    <input type="radio" name="component" value="timer">
+                    <span>Timeout (wait)</span>
+                </label>
+                <label>
+                    <input type="radio" name="component" value="btn-counter">
+                    <span>Click Count Button</span>
+                </label>
+                <label>
+                    <input type="radio" name="component" value="text-static">
+                    <span>Answer Input (Static)</span>
+                </label>
+                <label>
+                    <input type="radio" name="component" value="text-dynamic">
+                    <span>Answer Input (Computed)</span>
+                </label>
+            </div>
+            <div id="component-content">
+                <!-- Load the selected component -->
+            </div>
+        </div>
+        <button id="btn">Add Level</button>
+    </div>
+
+    <div class="editor-rework">
+        <h3>Edit</h3>
+        <div>Currently editing level <span id="level-edit">#</span></div>
+        <textarea id="text-edit"></textarea>
+        <small>I was too lazy to set this up properly, you can tweak the JSON itself :P</small>
+        <button id="cancel-edit">Cancel</button>
+        <button id="save-edit">Save</button>
+    </div>
+
+    <div class="database">
+        <hgroup>
+            <h2>Levels Database</h2>
+            <div class="db-controls">
+                <button id="import-btn">Import JSON</button>
+                <button id="export-btn">Export JSON</button>
+                <input type="file" id="import-file" accept=".json" style="display:none">
+            </div>
+            <p>
+                Find levels you have created (most recent first). You can edit or delete them.
+            </p>
+        </hgroup>
+        <div class="levels-list"></div>
+        <div class="levels-pages">
+            <!-- div.class=page -->
+        </div>
+    </div>
+</body>
+
+
+<!-- Empty Component -->
+<template id="template-empty">
+    <div class="component-editor">
+        <hgroup>
+            <h4>Empty Component</h4>
+            <p>
+                Default compontent, player simply clicks to advance.
+            </p>
+        </hgroup>
+    </div>
+</template>
+
+<!-- Button Single -->
+<template id="template-btn-single">
+    <div class="component-editor">
+        <hgroup>
+            <h4>One Button</h4>
+            <p>
+                Player needs to click a button to advance.
+            </p>
+        </hgroup>
+        <div class="params-list">
+            <div>
+                <span>Button's Text</span>
+                <input type="text" id="btn-text" placeholder="Ok">
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Button Counter -->
+<template id="template-btn-counter">
+    <div class="component-editor">
+        <hgroup>
+            <h4>Click Count Button</h4>
+            <p>
+                Player needs to click the button X times before they advance.
+            </p>
+        </hgroup>
+        <div class="params-list">
+            <div>
+                <span>Button's Text</span>
+                <input type="text" id="btn-text" placeholder="Click 5 times">
+            </div>
+            <div>
+                <span>Number of Clicks</span>
+                <input type="text" id="btn-click-count" placeholder="5">
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Button Double -->
+<template id="template-btn-double">
+    <div class="component-editor">
+        <hgroup class="heading">
+            <h4>Choice Buttons</h4>
+            <p>
+                Player needs to choose between two buttons, but only one is correct.
+            </p>
+        </hgroup>
+        <div class="params-list">
+            <div>
+                <span>1st Button Text</span>
+                <input type="text" id="btn-text-one" placeholder="ButtOne">
+                <label>
+                    <input type="radio" id="btn-correct" name="btn-correct" value="0" checked>
+                    <span>Correct?</span>
+                </label>
+            </div>
+            <div>
+                <span>2nd Button Text</span>
+                <input type="text" id="btn-text-two" placeholder="ButTwo">
+                <label>
+                    <input type="radio" id="btn-correct" name="btn-correct" value="1">
+                    <span>Correct?</span>
+                </label>
+            </div>
+            <div>
+                <span>Error Message <small>(Optional)</small></span>
+                <input type="text" id="btn-error-msg">
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Text static -->
+<template id="template-text-static">
+    <div class="component-editor">
+        <hgroup class="heading">
+            <h4>Static Answer Input</h4>
+            <p>
+                Player needs to write the correct answer in a Textbox.
+            </p>
+        </hgroup>
+        <div class="params-list">
+            <div>
+                <span>Correct answer</span>
+                <input class="text-answer" id="correct-answer" placeholder="(Comma separated if multiple)">
+            </div>
+            <div>
+                <span>Textbox Placeholder <small>(Optional)</small></span>
+                <input class="text-content" id="input-placeholder" placeholder="Type something...">
+            </div>
+            <div>
+                <span>Submit Button Text <small>(Optional)</small></span>
+                <input class="text-content" id="submit-text" placeholder="Submit">
+            </div>
+            <div>
+                <span>Error Message <small>(Optional)</small></span>
+                <input class="text-error-msg" id="error-msg">
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Text dynamic -->
+<template id="template-text-dynamic">
+    <div class="component-editor">
+        <hgroup class="heading">
+            <h4>Computed Answer Input</h4>
+            <p>
+                Player needs to write the correct answer in a Textbox. But answer might vary so it is checked against a
+                function.
+            </p>
+        </hgroup>
+        <div class="params-list">
+            <div>
+                <span>Name Referencing Function </span>
+                <input class="text-function" id="function-name" placeholder="checkAnswerAge">
+            </div>
+            <div>
+                <span>Textbox Placeholder <small>(Optional)</small></span>
+                <input class="text-content" id="input-placeholder" placeholder="Type something...">
+            </div>
+            <div>
+                <span>Submit Button Text <small>(Optional)</small></span>
+                <input class="text-content" id="submit-text" placeholder="Submit">
+            </div>
+            <div>
+                <span>Error Message <small>(Optional)</small></span>
+                <input class="text-error-msg" id="error-msg">
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Wait -->
+<template id="template-timer">
+    <div class="component-editor">
+        <hgroup class="heading">
+            <h4>Timeout (wait)</h4>
+            <p>
+                Player needs to wait some time before they can advance.
+            </p>
+        </hgroup>
+        <div class="params-list">
+            <div>
+                <span>Time (in seconds)</span>
+                <input type="text" id="timer" placeholder="30">
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Levels in list -->
+<template id="template-level-list-item">
+    <div class="level-list-item">
+        <span class="content">
+            <p class="text"></p>
+            <div class="component-data">
+                <!-- Fill values here -->
+            </div>
+        </span>
+        <div>
+            <button class="btn-edit">Edit</button>
+            <button class="btn-delete">Delete</button>
+        </div>
+    </div>
+</template>
+
+
+</html>
