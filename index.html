@@ -29,7 +29,7 @@
                 <h3>Text Input</h3>
                 <p>Compose the main text that will appear in the character's speech bubble.</p>
             </hgroup>
-            <textarea id="text"></textarea>
+            <textarea id="text" autocomplete="off"></textarea>
             <small><span id="shortcut-hint"></span> to save the level. You may use <b>**bold**</b> and
                 <i>_italic_</i>.</small>
         </div>
@@ -77,7 +77,7 @@
     <div class="editor-rework">
         <h3>Edit</h3>
         <div>Currently editing level <span id="level-edit">#</span></div>
-        <textarea id="text-edit"></textarea>
+        <textarea id="text-edit" autocomplete="off"></textarea>
         <small>I was too lazy to set this up properly, you can tweak the JSON itself :P</small>
         <button id="cancel-edit">Cancel</button>
         <button id="save-edit">Save</button>
