@@ -132,31 +132,31 @@ const component = {
 
         switch (component.type) {
             case components.BTN_SINGLE:
-                if (!component.btn) 
+                if (!component.btn)
                     return "Button text is required.";
                 break;
             case components.BTN_COUNTER:
-                if (!component.btn) 
+                if (!component.btn)
                     return "Button text is required.";
                 if (!Number.isInteger(component.count) || component.count < 1)
                     return "Count must be a positive number.";
                 break;
             case components.BTN_DOUBLE:
-                if (!component.btnOne || !component.btnTwo) 
+                if (!component.btnOne || !component.btnTwo)
                     return "Both button texts are required.";
-                if (component.answerIdx !== 0 && component.answerIdx !== 1) 
+                if (component.answerIdx !== 0 && component.answerIdx !== 1)
                     return "A correct button must be selected.";
                 break;
             case components.INPUT_STATIC:
-                if (!component.answerValue) 
+                if (!component.answerValue)
                     return "Correct answer is required.";
                 break;
             case components.INPUT_FUNCTION:
-                if (!component.answerFunction) 
+                if (!component.answerFunction)
                     return "Function name is required.";
                 break;
             case components.TIMER:
-                if (!Number.isInteger(component.time) || component.time < 1) 
+                if (!Number.isInteger(component.time) || component.time < 1)
                     return "Time must be a positive number.";
                 break;
         }
@@ -184,7 +184,7 @@ function renderLevels() {
         const node = template.content.cloneNode(true).querySelector(".level-list-item");
         const values = node.querySelector(".component-data");
         node.querySelector(".text").innerHTML = `<small>[Lvl. ${level._index + 1}] </small>${level.text}`;
-        
+
         if (level.data) {
             Object.entries(level.data).forEach(([key, value]) => {
                 const holder = document.createElement("div");
@@ -218,21 +218,31 @@ function renderLevels() {
             let toEdit = { ...level };
             delete toEdit._index; // Remove index for editing (to avoid confusion)
 
-            document.getElementById("text-edit").value = JSON.stringify(toEdit, null, 4);
-            document.getElementById("level-edit").textContent = level._index + 1; // Display level index
+            const temlpate = document.getElementById("template-edit-level");
+            const editNode = temlpate.content.cloneNode(true).querySelector(".editor-rework");
+
+            editNode.querySelector("#text-edit").value = JSON.stringify(toEdit, null, 4);
+            editNode.querySelector("#level-edit").textContent = level._index + 1; // Display level index
+
+            const modalInstance = modal.create(editNode);
+
+            // Auto resize
+            const txtbox = editNode.querySelector("textarea");
+            txtbox.addEventListener("input", () => autoResizeTextAreas(txtbox));
+            autoResizeTextAreas(txtbox);
 
             // Set new event listener for saving edits
-            const editButton = document.getElementById("save-edit");
+            const editButton = editNode.querySelector("#save-edit");
             editButton.onclick = () => {
-                editLevel(level._index);
-                // Reset the save button to its original function
-                editButton.onclick = () => {};
+                if (editLevel(level._index)) {
+                    modalInstance.destroy();
+                }
             };
             document.getElementById("cancel-edit").onclick = () => {
-                document.getElementById("text-edit").value = "";
-                document.getElementById("level-edit").textContent = "#";
-                editButton.onclick = () => {};
+                modalInstance.destroy();
             };
+
+            modalInstance.show();
         });
     });
 
@@ -254,6 +264,30 @@ function renderLevels() {
     }
 }
 
+const modal = {
+    // Show modal with content
+    create: (content) => {
+        const modal = document.querySelector(".modal");
+        modal.innerHTML = "";
+
+        content.classList.add("modal-content");
+        modal.appendChild(content);
+
+        modal.classList.add("active");
+
+        return {
+            show: () => {
+                console.log("Showing modal");
+                modal.classList.add("active");
+            },
+            destroy: () => {
+                modal.classList.remove("active");
+                modal.innerHTML = ""; // Clear content
+            }
+        }
+    },
+}
+
 // Save level
 function saveLevel() {
     const text = document.getElementById("text").value.trim();
@@ -261,13 +295,13 @@ function saveLevel() {
 
     if (!text) {
         alert("Bruh! Text input cannot be empty.");
-        return;
+        return false;
     }
 
     const validation = component.validate(data);
     if (validation !== true) {
         alert(validation);
-        return;
+        return false;
     }
 
     const entry = {
@@ -284,6 +318,7 @@ function saveLevel() {
 
     // Re-render levels
     renderLevels();
+    return true;
 }
 
 // Edit level
@@ -294,7 +329,7 @@ function editLevel(idx) {
         parsed = JSON.parse(raw);
     } catch (e) {
         alert("Invalid JSON format. Please check your input.");
-        return;
+        return false
     }
 
     const { text, data } = parsed;
@@ -302,7 +337,7 @@ function editLevel(idx) {
     const validation = component.validate(data);
     if (validation !== true) {
         alert(validation);
-        return;
+        return false;
     }
 
     levels[idx] = { text, data, _index: idx };
@@ -314,6 +349,7 @@ function editLevel(idx) {
 
     // Re-render levels
     renderLevels();
+    return true;
 }
 
 // Save events
@@ -413,7 +449,7 @@ document.getElementById("export-btn").addEventListener("click", () => {
 // Set auto resize for text areas
 const autoResizeTextAreas = (el) => {
     el.style.height = "auto"; // Reset height
-    el.style.height = `${el.scrollHeight + 2*1.7}px`; // Set to scroll height
+    el.style.height = `${el.scrollHeight + 2 * 1.7}px`; // Set to scroll height
 }
 
 document.querySelectorAll("textarea").forEach(textarea => {

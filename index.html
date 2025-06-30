@@ -23,16 +23,6 @@
             </p>
         </header>
 
-
-        <div class="editor-rework" style="display: none;">
-            <h3>Edit</h3>
-            <div>Currently editing level <span id="level-edit">#</span></div>
-            <textarea id="text-edit" autocomplete="off"></textarea>
-            <small>I was too lazy to set this up properly, you can tweak the JSON itself :P</small>
-            <button id="cancel-edit">Cancel</button>
-            <button id="save-edit">Save</button>
-        </div>
-
         <div class="board-row">
             <div class="editor">
                 <hgroup>
@@ -62,7 +52,8 @@
                             Level Component
                         </h3>
                         <p>
-                            Select & fill out a component attached to the level to add extra fun challenges. If default is selected (No Component), player
+                            Select & fill out a component attached to the level to add extra fun challenges. If default
+                            is selected (No Component), player
                             clicks to advance.
                         </p>
                     </hgroup>
@@ -147,6 +138,10 @@
             </div>
         </div>
     </main>
+
+    <div class="modal">
+        <!-- Modal content -->
+    </div>
 </body>
 
 
@@ -289,7 +284,8 @@
             </div>
             <div>
                 <span>Textbox Placeholder <small>(Optional)</small></span>
-                <input type="text" class="text-content" id="input-placeholder" placeholder="What month are we currently in?">
+                <input type="text" class="text-content" id="input-placeholder"
+                    placeholder="What month are we currently in?">
             </div>
             <div>
                 <span>Submit Button Text <small>(Optional)</small></span>
@@ -341,5 +337,20 @@
     </div>
 </template>
 
+<!-- Edit compoment -->
+<template id="template-edit-level">
+    <div class="editor-rework">
+        <hgroup>
+            <h3>Edit Lvl. <span id="level-edit">#</span></h3>
+            <p>Use JSON codeblock below to edit level.</p>
+            <p>I was too lazy to set this up properly, but I believe in you, you can do it :P</p>
+        </hgroup>
+        <textarea id="text-edit" autocomplete="off"></textarea>
+        <div class="action">
+            <button id="cancel-edit">Cancel</button>
+            <button id="save-edit">Save</button>
+        </div>
+    </div>
+</template>
 
 </html>

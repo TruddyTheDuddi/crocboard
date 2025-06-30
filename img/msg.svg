@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><!--
- // 16pxls (c) by Paul mackenzie <paul@whatspauldoing.com>
- //
- // 16pxls is licensed under a
- // Creative Commons Attribution-ShareAlike 4.0 International License.
- //
- // You should have received a copy of the license along with this
- // work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
--->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>notifications-filled</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="drop" fill="#000000" transform="translate(64.000000, 64.000000)">
+            <path d="M405.333333,85.3333333 L405.333333,320 L341.292969,320 L341.333333,405.333333 L186.515625,320 L85.3333333,320 L85.3333333,85.3333333 L405.333333,85.3333333 Z M298.666667,-1.42108547e-14 L298.666667,42.6666667 L42.6666667,42.6666667 L42.6666667,213.333333 L-1.42108547e-14,213.333333 L-1.42108547e-14,-1.42108547e-14 L298.666667,-1.42108547e-14 Z" id="Shape">
 
-<svg fill="#000000" width="800px" height="800px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16 12v4l-5-4H0V0h16v12zm-2-2V2H2v8h12zm-2.5 0l2.5 2v-2h-2.5zM4 4h8v2H4V4z" fill-rule="evenodd"/>
+</path>
+        </g>
+    </g>
 </svg>

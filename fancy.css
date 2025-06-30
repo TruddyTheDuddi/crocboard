@@ -242,6 +242,7 @@ img.icon {
         transition: 0s;
         background-color: var(--text);
         border-color: var(--text);
+
         img.icon {
             filter: invert(0);
         }
@@ -251,16 +252,25 @@ img.icon {
         opacity: 0.5;
     }
 
-    &.btn-delete:hover{
+    &.btn-delete:hover {
         background-color: var(--danger);
         border-color: var(--danger);
+
         img.icon {
             filter: invert(1);
         }
     }
 }
 
+
 /* Element specific */
+header {
+    max-width: 40em;
+    display: grid;
+    gap: 1.5em;
+    font-size: 1.1em;
+}
+
 .board-row {
     display: grid;
     gap: 4em;
@@ -343,12 +353,12 @@ img.icon {
     display: grid;
     gap: 2em;
 
-    .flex-header{
+    .flex-header {
         display: flex;
         gap: 2em;
         align-items: flex-start;
 
-        hgroup{
+        hgroup {
             flex: 1;
         }
 
@@ -357,7 +367,7 @@ img.icon {
             gap: 0.75em;
             align-items: center;
             justify-content: flex-end;
-    
+
             button {
                 padding: 0.8em 1em;
             }
@@ -384,12 +394,12 @@ img.icon {
             .text {
                 word-break: break-word;
 
-                small{
+                small {
                     font-size: 1em;
                 }
             }
 
-            .component-data{
+            .component-data {
                 display: grid;
                 gap: 0.5em;
                 font-size: 0.9em;
@@ -399,13 +409,13 @@ img.icon {
                 line-height: normal;
                 margin-left: 3.5em;
 
-                >div{
+                >div {
                     display: flex;
                     gap: 0.25em;
                     flex-wrap: wrap;
                     justify-content: space-between;
 
-                    .key{
+                    .key {
                         font-weight: bold;
                     }
                 }
@@ -419,11 +429,56 @@ img.icon {
     }
 }
 
-.levels-pages{
+.levels-pages {
     display: flex;
     justify-content: center;
 
-    .page{
+    .page {
         padding: 0.5em;
+    }
+}
+
+.editor-rework{
+    display: grid;
+    gap: 1.25em;
+
+    .action{
+        display: flex;
+        gap: 0.5em;
+        justify-content: flex-end;
+    }
+
+    textarea{
+        font-size: 0.9em;
+    }
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    display: grid;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(18, 18, 18, 0.9);
+    z-index: 1000;
+    overflow: auto;
+    opacity: 0;
+    transition: 0.3s opacity;
+    pointer-events: none;
+
+    .modal-content {
+        align-self: center;
+        justify-self: center;
+        background-color: var(--background);
+        color: var(--text);
+        padding: 1em;
+        max-width: 28em;
+    }
+
+    &.active {
+        opacity: 1;
+        pointer-events: all;
     }
 }
