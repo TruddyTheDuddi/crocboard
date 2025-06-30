@@ -165,7 +165,7 @@ const component = {
     }
 };
 
-const LEVELS_PER_PAGE = 2;
+const LEVELS_PER_PAGE = 20;
 let currentPage = 0;
 
 function renderLevels() {
@@ -182,21 +182,26 @@ function renderLevels() {
     // Render each level
     pageLevels.forEach((level) => {
         const node = template.content.cloneNode(true).querySelector(".level-list-item");
-        node.querySelector(".text").textContent = level.text;
-
         const values = node.querySelector(".component-data");
+        node.querySelector(".text").innerHTML = `<small>[Lvl. ${level._index + 1}] </small>${level.text}`;
+        
         if (level.data) {
             Object.entries(level.data).forEach(([key, value]) => {
+                const holder = document.createElement("div");
                 const k = document.createElement("span");
                 k.className = "key";
                 k.textContent = key;
                 const v = document.createElement("span");
                 v.className = "value";
                 v.textContent = value;
-                values.appendChild(k);
-                values.appendChild(v);
+                holder.appendChild(k);
+                holder.appendChild(v);
+                values.appendChild(holder);
             });
+        } else {
+            values.style.display = "none";
         }
+
         list.appendChild(node);
 
         // Event handlers
@@ -267,7 +272,8 @@ function saveLevel() {
 
     const entry = {
         text,
-        data
+        data,
+        _index: currentIdx++
     };
     levels.push(entry);
     isDirty = true;
@@ -275,8 +281,6 @@ function saveLevel() {
     // Clear stuff
     document.getElementById("text").value = "";
     setupRadio();
-
-    console.log("Saved level:", entry);
 
     // Re-render levels
     renderLevels();
@@ -322,10 +326,10 @@ document.getElementById("text").addEventListener("keydown", (e) => {
 });
 
 // Setup idx
-// let currentIdx = levels.length;
-// levels.forEach((level, idx) => {
-//     level._index = idx;
-// });
+let currentIdx = levels.length;
+levels.forEach((level, idx) => {
+    level._index = idx;
+});
 
 function updateShortcutHint() {
     const isMac = navigator.userAgentData
@@ -405,3 +409,28 @@ document.getElementById("import-file").addEventListener("change", (e) => {
 document.getElementById("export-btn").addEventListener("click", () => {
     file.export();
 });
+
+// Set auto resize for text areas
+const autoResizeTextAreas = (el) => {
+    el.style.height = "auto"; // Reset height
+    el.style.height = `${el.scrollHeight + 2*1.7}px`; // Set to scroll height
+}
+
+document.querySelectorAll("textarea").forEach(textarea => {
+    textarea.addEventListener("input", () => autoResizeTextAreas(textarea));
+    autoResizeTextAreas(textarea); // Initial resize
+});
+
+// Count characters in text input
+const textInput = document.getElementById("text");
+const charCountDisplay = document.getElementById("charCount");
+if (textInput && charCountDisplay) {
+    const updateCharCount = () => {
+        const count = textInput.value.length;
+        charCountDisplay.textContent = `(${count}/512)`;
+        charCountDisplay.classList.toggle("dangerous", count > 512);
+    };
+
+    textInput.addEventListener("input", updateCharCount);
+    updateCharCount(); // Initial count
+}

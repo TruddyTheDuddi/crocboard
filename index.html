@@ -4,102 +4,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="fancy.css">
     <script src="script.js" defer></script>
     <title>Croc-Board</title>
 </head>
 
 <body>
-    <header>
-        <h1>Croc-Board</h1>
-        <p>
-            Grab some fancy parfume, Crocodior or Lancrôque (both are fine), and dive into the mindset of the sumptuous Odile... and make the player give up.
-        </p>
-        <p>
-            Game content building dashboard for creating levels and display some stats for <b>"No, You Won't Speak to the Manager"</b>
-        </p>
-    </header>
-
-    <div class="editor">
-        <hgroup>
-            <h2>Level Builder</h2>
-        </hgroup>
-
-        <div class="editor-text">
-            <hgroup>
-                <h3>Text Input</h3>
-                <p>Compose the main text that will appear in the character's speech bubble.</p>
-            </hgroup>
-            <textarea id="text" autocomplete="off"></textarea>
-            <small><span id="shortcut-hint"></span> to save the level. You may use <b>**bold**</b> and
-                <i>_italic_</i>.</small>
-        </div>
-
-        <div class="editor-component">
-            <h3>Component</h3>
-            <div class="component-selector">
-                <!-- Radio buttons -->
-                <label>
-                    <input type="radio" name="component" value="empty" checked>
-                    <span>No Component</span>
-                </label>
-                <label>
-                    <input type="radio" name="component" value="btn-single">
-                    <span>One Button</span>
-                </label>
-                <label>
-                    <input type="radio" name="component" value="btn-double">
-                    <span>Choice Buttons</span>
-                </label>
-                <label>
-                    <input type="radio" name="component" value="timer">
-                    <span>Timeout (wait)</span>
-                </label>
-                <label>
-                    <input type="radio" name="component" value="btn-counter">
-                    <span>Click Count Button</span>
-                </label>
-                <label>
-                    <input type="radio" name="component" value="text-static">
-                    <span>Answer Input (Static)</span>
-                </label>
-                <label>
-                    <input type="radio" name="component" value="text-dynamic">
-                    <span>Answer Input (Computed)</span>
-                </label>
-            </div>
-            <div id="component-content">
-                <!-- Load the selected component -->
-            </div>
-        </div>
-        <button id="btn">Add Level</button>
-    </div>
-
-    <div class="editor-rework">
-        <h3>Edit</h3>
-        <div>Currently editing level <span id="level-edit">#</span></div>
-        <textarea id="text-edit" autocomplete="off"></textarea>
-        <small>I was too lazy to set this up properly, you can tweak the JSON itself :P</small>
-        <button id="cancel-edit">Cancel</button>
-        <button id="save-edit">Save</button>
-    </div>
-
-    <div class="database">
-        <hgroup>
-            <h2>Levels Database</h2>
-            <div class="db-controls">
-                <button id="import-btn">Import JSON</button>
-                <button id="export-btn">Export JSON</button>
-                <input type="file" id="import-file" accept=".json" style="display:none">
-            </div>
+    <main>
+        <header>
+            <h1>Croc-Board™</h1>
             <p>
-                Find levels you have created (most recent first). You can edit or delete them.
+                Grab some fancy parfume, Crocodior or Lancrôque (both are fine), and dive into the mindset of the
+                sumptuous Odile... and make the player give up.
             </p>
-        </hgroup>
-        <div class="levels-list"></div>
-        <div class="levels-pages">
-            <!-- div.class=page -->
+            <p>
+                Game content building dashboard for creating levels and display some stats for <b>"No, You Won't Speak
+                    to the Manager"</b>
+            </p>
+        </header>
+
+
+        <div class="editor-rework" style="display: none;">
+            <h3>Edit</h3>
+            <div>Currently editing level <span id="level-edit">#</span></div>
+            <textarea id="text-edit" autocomplete="off"></textarea>
+            <small>I was too lazy to set this up properly, you can tweak the JSON itself :P</small>
+            <button id="cancel-edit">Cancel</button>
+            <button id="save-edit">Save</button>
         </div>
-    </div>
+
+        <div class="board-row">
+            <div class="editor">
+                <hgroup>
+                    <h2>
+                        <img class="icon" src="img/msg.svg">
+                        Level Builder
+                    </h2>
+                    <p>
+                        Compose the main message that will appear in the character's speech bubble. One level is one
+                        message.
+                    </p>
+                </hgroup>
+
+                <div class="editor-text">
+                    <h3>Dialog Text Input<small id="charCount"></small></h3>
+                    <textarea id="text" autocomplete="off" rows="3" placeholder="Crocodile's words..."></textarea>
+                    <small><span id="shortcut-hint"></span> to save the level. You may use <b>**bold**</b> and
+                        <i>_italic_</i>.</small>
+                </div>
+
+
+                <br>
+
+                <div class="editor-component">
+                    <hgroup>
+                        <h3>
+                            Level Component
+                        </h3>
+                        <p>
+                            Select & fill out a component attached to the level to add extra fun challenges. If default is selected (No Component), player
+                            clicks to advance.
+                        </p>
+                    </hgroup>
+                    <div class="component-selector">
+                        <!-- Radio buttons -->
+                        <label class="radio">
+                            <input type="radio" name="component" value="empty" checked>
+                            <span class="pseudo"></span>
+                            <span>No Component</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="component" value="btn-single">
+                            <span class="pseudo"></span>
+                            <span>One Button</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="component" value="btn-double">
+                            <span class="pseudo"></span>
+                            <span>Choice Buttons</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="component" value="timer">
+                            <span class="pseudo"></span>
+                            <span>Timeout (wait)</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="component" value="btn-counter">
+                            <span class="pseudo"></span>
+                            <span>Click Count Button</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="component" value="text-static">
+                            <span class="pseudo"></span>
+                            <span>Answer Input (Static)</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="component" value="text-dynamic">
+                            <span class="pseudo"></span>
+                            <span>Answer Input (Computed)</span>
+                        </label>
+                    </div>
+                    <div id="component-content">
+                        <!-- Load the selected component -->
+                    </div>
+                </div>
+
+                <br>
+
+                <button id="btn">
+                    <img class="icon" src="img/add.svg">
+                    Add Level
+                </button>
+            </div>
+
+            <div class="database">
+                <div class="flex-header">
+                    <hgroup>
+                        <h2>
+                            <img class="icon" src="img/db.svg">
+                            Levels Database
+                        </h2>
+                        <p>
+                            Find levels you have created (most recent first). You can edit or delete them.
+                        </p>
+                    </hgroup>
+                    <div class="db-controls">
+                        <button id="import-btn">
+                            <img class="icon" src="img/import.svg">
+                            Import
+                        </button>
+                        <button id="export-btn">
+                            <img class="icon" src="img/export.svg">
+                            Export
+                        </button>
+                        <input type="file" id="import-file" accept=".json" style="display:none">
+                    </div>
+                </div>
+                <div class="levels-list"></div>
+                <div class="levels-pages">
+                    <!-- div.class=page -->
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 
 
@@ -109,7 +156,7 @@
         <hgroup>
             <h4>Empty Component</h4>
             <p>
-                Default compontent, player simply clicks to advance.
+                Most basic compontent, only displays the message, player simply clicks to advance.
             </p>
         </hgroup>
     </div>
@@ -121,13 +168,13 @@
         <hgroup>
             <h4>One Button</h4>
             <p>
-                Player needs to click a button to advance.
+                Player needs to click on the button to advance.
             </p>
         </hgroup>
         <div class="params-list">
             <div>
                 <span>Button's Text</span>
-                <input type="text" id="btn-text" placeholder="Ok">
+                <input type="text" id="btn-text" placeholder="Click me">
             </div>
         </div>
     </div>
@@ -139,13 +186,13 @@
         <hgroup>
             <h4>Click Count Button</h4>
             <p>
-                Player needs to click the button X times before they advance.
+                Player needs to click a button X times before they advance.
             </p>
         </hgroup>
         <div class="params-list">
             <div>
                 <span>Button's Text</span>
-                <input type="text" id="btn-text" placeholder="Click 5 times">
+                <input type="text" id="btn-text" placeholder="Click me 5 times">
             </div>
             <div>
                 <span>Number of Clicks</span>
@@ -166,24 +213,30 @@
         </hgroup>
         <div class="params-list">
             <div>
-                <span>1st Button Text</span>
-                <input type="text" id="btn-text-one" placeholder="ButtOne">
-                <label>
-                    <input type="radio" id="btn-correct" name="btn-correct" value="0" checked>
-                    <span>Correct?</span>
-                </label>
+                <span>
+                    1st Button Text
+                    <label class="radio">
+                        <input type="radio" id="btn-correct" name="btn-correct" value="0" checked>
+                        <span class="pseudo"></span>
+                        <span>Correct?</span>
+                    </label>
+                </span>
+                <input type="text" id="btn-text-one" placeholder="Click button one">
             </div>
             <div>
-                <span>2nd Button Text</span>
-                <input type="text" id="btn-text-two" placeholder="ButTwo">
-                <label>
-                    <input type="radio" id="btn-correct" name="btn-correct" value="1">
-                    <span>Correct?</span>
-                </label>
+                <span>
+                    2nd Button Text
+                    <label class="radio">
+                        <input type="radio" id="btn-correct" name="btn-correct" value="1">
+                        <span class="pseudo"></span>
+                        <span>Correct?</span>
+                    </label>
+                </span>
+                <input type="text" id="btn-text-two" placeholder="Click button two">
             </div>
             <div>
                 <span>Error Message <small>(Optional)</small></span>
-                <input type="text" id="btn-error-msg">
+                <input type="text" id="btn-error-msg" placeholder="You clicked the wrong button!">
             </div>
         </div>
     </div>
@@ -201,19 +254,19 @@
         <div class="params-list">
             <div>
                 <span>Correct answer</span>
-                <input class="text-answer" id="correct-answer" placeholder="(Comma separated if multiple)">
+                <input type="text" class="text-answer" id="correct-answer" placeholder="(Comma separated if multiple)">
             </div>
             <div>
                 <span>Textbox Placeholder <small>(Optional)</small></span>
-                <input class="text-content" id="input-placeholder" placeholder="Type something...">
+                <input type="text" class="text-content" id="input-placeholder" placeholder="What's my name?">
             </div>
             <div>
                 <span>Submit Button Text <small>(Optional)</small></span>
-                <input class="text-content" id="submit-text" placeholder="Submit">
+                <input type="text" class="text-content" id="submit-text" placeholder="Submit Pathetic Guess">
             </div>
             <div>
                 <span>Error Message <small>(Optional)</small></span>
-                <input class="text-error-msg" id="error-msg">
+                <input type="text" class="text-error-msg" id="error-msg" placeholder="What? That's not my name!">
             </div>
         </div>
     </div>
@@ -231,20 +284,20 @@
         </hgroup>
         <div class="params-list">
             <div>
-                <span>Name Referencing Function </span>
-                <input class="text-function" id="function-name" placeholder="checkAnswerAge">
+                <span>Referencing to Function</span>
+                <input type="text" class="text-function" id="function-name" placeholder="checkAnswerMonth">
             </div>
             <div>
                 <span>Textbox Placeholder <small>(Optional)</small></span>
-                <input class="text-content" id="input-placeholder" placeholder="Type something...">
+                <input type="text" class="text-content" id="input-placeholder" placeholder="What month are we currently in?">
             </div>
             <div>
                 <span>Submit Button Text <small>(Optional)</small></span>
-                <input class="text-content" id="submit-text" placeholder="Submit">
+                <input type="text" class="text-content" id="submit-text" placeholder="Submit Pathetic Guess">
             </div>
             <div>
                 <span>Error Message <small>(Optional)</small></span>
-                <input class="text-error-msg" id="error-msg">
+                <input type="text" class="text-error-msg" id="error-msg" placeholder="Wrong, please check a calendar!">
             </div>
         </div>
     </div>
@@ -271,15 +324,19 @@
 <!-- Levels in list -->
 <template id="template-level-list-item">
     <div class="level-list-item">
-        <span class="content">
+        <div class="content">
             <p class="text"></p>
             <div class="component-data">
                 <!-- Fill values here -->
             </div>
-        </span>
-        <div>
-            <button class="btn-edit">Edit</button>
-            <button class="btn-delete">Delete</button>
+        </div>
+        <div class="action">
+            <div class="icon-btn btn-edit">
+                <img class="icon" src="img/edit.svg">
+            </div>
+            <div class="icon-btn btn-delete">
+                <img class="icon" src="img/trash.svg">
+            </div>
         </div>
     </div>
 </template>
