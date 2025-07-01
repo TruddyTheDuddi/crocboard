@@ -433,6 +433,27 @@ header {
             flex: 1;
             display: grid;
             gap: 0.5em;
+            
+            .top{
+                display: flex;
+                gap: 1em;
+                font-size: 0.8em;
+                color: var(--text-faded);
+                align-items: center;
+
+                .lvl {
+                    font-weight: bold;
+                }
+
+                .author::before{
+                    content: 'by ';
+                }
+
+                .time {
+                    margin-left: auto;
+                    opacity: 0.5;
+                }
+            }
 
             .text {
                 word-break: break-word;

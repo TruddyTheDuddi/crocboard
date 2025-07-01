@@ -185,7 +185,9 @@ function renderLevels() {
         const values = node.querySelector(".component-data");
         node.querySelector(".text").innerHTML = level.text;
 
-        node.querySelector("small.lvl").textContent = `[Lvl. ${level._index + 1}]`;
+        node.querySelector(".top .lvl").textContent = `[Lvl. ${level._index + 1}]`;
+        node.querySelector(".top .author").textContent = `@${level._meta?.user|| "Anonymous"}`;
+        node.querySelector(".top .time").textContent = `${new Date(level._meta?.createdAt).toLocaleString()}`;
 
         if (level.data) {
             Object.entries(level.data).forEach(([key, value]) => {
@@ -279,7 +281,6 @@ const modal = {
 
         return {
             show: () => {
-                console.log("Showing modal");
                 modal.classList.add("active");
             },
             destroy: () => {
@@ -309,13 +310,18 @@ function saveLevel() {
     const entry = {
         text,
         data,
-        _index: currentIdx++
+        _index: currentIdx++,
+        _meta: {
+            createdAt: new Date().toISOString(),
+            user: localStorage.getItem("odile-username") || null
+        }
     };
     levels.push(entry);
     isDirty = true;
 
     // Clear stuff
     document.getElementById("text").value = "";
+    updateCharCount();
     setupRadio();
 
     // Re-render levels
@@ -334,7 +340,7 @@ function editLevel(idx) {
         return false
     }
 
-    const { text, data } = parsed;
+    const { data } = parsed;
 
     const validation = component.validate(data);
     if (validation !== true) {
@@ -342,7 +348,7 @@ function editLevel(idx) {
         return false;
     }
 
-    levels[idx] = { text, data, _index: idx };
+    levels[idx] = { ...parsed, _index: idx };
     isDirty = true;
 
     // Clear edit fields
@@ -402,6 +408,7 @@ const file = {
                 levels = imported.map((lvl, idx) => ({ ...lvl, _index: idx })); // Set _index for each level
                 currentPage = 0;
                 isDirty = true;
+                currentIdx = levels.length; // Update current index to the new length
                 renderLevels();
                 alert("Levels imported successfully!");
             } catch (err) {
@@ -462,16 +469,14 @@ document.querySelectorAll("textarea").forEach(textarea => {
 // Count characters in text input
 const textInput = document.getElementById("text");
 const charCountDisplay = document.getElementById("charCount");
-if (textInput && charCountDisplay) {
-    const updateCharCount = () => {
-        const count = textInput.value.length;
-        charCountDisplay.textContent = `(${count}/512)`;
-        charCountDisplay.classList.toggle("dangerous", count > 512);
-    };
+const updateCharCount = () => {
+    const count = textInput.value.length;
+    charCountDisplay.textContent = `(${count}/512)`;
+    charCountDisplay.classList.toggle("dangerous", count > 512);
+};
 
-    textInput.addEventListener("input", updateCharCount);
-    updateCharCount(); // Initial count
-}
+textInput.addEventListener("input", updateCharCount);
+updateCharCount(); // Initial count
 
 
 // Login
@@ -507,6 +512,6 @@ function loginSetup() {
         localStorage.removeItem("odile-username");
         loginSetup(); // Reinitialize login setup
     });
-} 
+}
 
 loginSetup();

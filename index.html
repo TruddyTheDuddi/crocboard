@@ -120,7 +120,7 @@
                             Levels Database
                         </h2>
                         <p>
-                            Find levels you have created (most recent first). You can edit or delete them.
+                            Find levels you have created (newest first). You can edit or delete them.
                         </p>
                     </hgroup>
                     <div class="db-controls">
@@ -339,7 +339,11 @@
 <template id="template-level-list-item">
     <div class="level-list-item">
         <div class="content">
-            <small class="lvl"></small>
+            <div class="top">
+                <span class="lvl"></span>
+                <span class="author"></span>
+                <span class="time"></span>
+            </div>
             <p class="text"></p>
             <div class="component-data">
                 <!-- Fill values here -->
