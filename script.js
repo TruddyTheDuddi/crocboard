@@ -42,26 +42,7 @@ function setupRadio() {
 }
 
 // Store created levels
-let levels = [
-    {
-        text: "You need to click this button 3 times to advance",
-        data: {
-            type: components.BTN_COUNTER,
-            btn: "Do a push-up",
-            count: 3, // Number of clicks required to advance
-        }
-    },
-    {
-        text: "Click the correct button to advance",
-        data: {
-            type: components.BTN_DOUBLE,
-            btnOne: "Click me",
-            btnTwo: "No, click me!",
-            answerIdx: 0, // Index of the correct button (0 or 1)
-            error: "Wrong button! Try again."
-        }
-    }
-];
+let levels = [];
 setupRadio();
 
 // Helper to get cleaned value or null from input id

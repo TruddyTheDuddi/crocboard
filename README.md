@@ -49,4 +49,10 @@ Each message is a level, and the player needs to read and click to advance to th
 ## 3. Technical Details
 I'm hosting the project on [Github Pages](https://truddytheduddi.github.io/crocboard/), you can easily access adn use it. Working on the levels will require the people to export, send the files and import them back in the dashboard. This is a limitation of the current implementation without the usage of databases, but it works well enough for now.
 
+### 3.1. Version
+
+**[v1.1]** - Removal of inital placehonlder data in the Levels Database. Also added the version logging on the Readme. Added links in footer.
+
+**[v1.0]** - Initial release of the dashboard!
+
 — ddemkoo 2025
