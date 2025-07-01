@@ -23,11 +23,11 @@
 
 @font-face {
     font-family: 'Kablammo';
-    src: url('fonts/Kablammo-Regular-VariableFont_MORF.ttf') format('truetype');
+    src: url('fonts/Kablammo.ttf') format('truetype');
 }
 
 body {
-    margin: 2.5em;
+    margin: 2.5em 0 ;
     font-family: var(--text-font);
     line-height: 1.5;
     background-color: var(--background-dark);
@@ -159,9 +159,10 @@ small {
 
 main {
     max-width: 70em;
+    padding: 3.5em;
     margin: 0 auto;
     display: grid;
-    gap: 4em;
+    gap: 5em;
 }
 
 kbd {
@@ -276,7 +277,6 @@ img.icon {
 
 /* Element specific */
 header {
-    padding: 2em 0;
     display: flex;
     gap: 2em;
     text-wrap: balance;
