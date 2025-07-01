@@ -6,28 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="fancy.css">
     <script src="script.js" defer></script>
-    <title>Croc-Board</title>
+    <title>CrocBoard</title>
 </head>
 
 <body>
     <main>
         <header>
-            <h1>Croc-Board™</h1>
-            <p>
-                Grab some fancy parfume, Crocodior or Lancrôque (both are fine), and dive into the mindset of the
-                sumptuous Odile... and make the player give up.
-            </p>
-            <p>
-                Game content building dashboard for creating levels and display some stats for <b>"No, You Won't Speak
-                    to the Manager"</b>
-            </p>
+            <hgroup>
+                <h1>CrocBoard</h1>
+                    <p>
+                        Game content building dashboard for creating levels and display some stats for <b>"No, You Won't
+                            Speak
+                            to the Manager"</b>
+                    </p>
+            </hgroup>
+            <aside>
+                <span class="welcome">
+                    Welcome back, <b id="username">#</b> <img id="logout" class="icon" src="img/icons/off.svg">
+                </span>
+            </aside>
         </header>
 
         <div class="board-row">
             <div class="editor">
                 <hgroup>
                     <h2>
-                        <img class="icon" src="img/msg.svg">
+                        <img class="icon" src="img/icons/msg.svg">
                         Level Builder
                     </h2>
                     <p>
@@ -103,8 +107,8 @@
                 <br>
 
                 <button id="btn">
-                    <img class="icon" src="img/add.svg">
                     Add Level
+                    <img class="icon" src="img/icons/add.svg">
                 </button>
             </div>
 
@@ -112,7 +116,7 @@
                 <div class="flex-header">
                     <hgroup>
                         <h2>
-                            <img class="icon" src="img/db.svg">
+                            <img class="icon" src="img/icons/db.svg">
                             Levels Database
                         </h2>
                         <p>
@@ -121,11 +125,11 @@
                     </hgroup>
                     <div class="db-controls">
                         <button id="import-btn">
-                            <img class="icon" src="img/import.svg">
+                            <img class="icon" src="img/icons/import.svg">
                             Import
                         </button>
                         <button id="export-btn">
-                            <img class="icon" src="img/export.svg">
+                            <img class="icon" src="img/icons/export.svg">
                             Export
                         </button>
                         <input type="file" id="import-file" accept=".json" style="display:none">
@@ -137,7 +141,21 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <div class="head">
+                <div class="title">CrocBoard</div>
+                <div>Created by <b>ddemkoo</b> — June 2025</div>
+            </div>
+            <small class="explain">Grab some fancy parfume, Crocodior or Lancrôque (both are fine), and dive into the mindset of the
+                sumptuous Odile... and make the player give up.</small>
+            <div class="links">
+                <a href="">GitHub</a>
+                <a href="">Game-Page</a>
+                <span>v1.0</span>
+            </div>
+        </footer>
     </main>
+
 
     <div class="modal">
         <!-- Modal content -->
@@ -321,17 +339,20 @@
 <template id="template-level-list-item">
     <div class="level-list-item">
         <div class="content">
+            <small class="lvl"></small>
             <p class="text"></p>
             <div class="component-data">
                 <!-- Fill values here -->
             </div>
         </div>
-        <div class="action">
-            <div class="icon-btn btn-edit">
-                <img class="icon" src="img/edit.svg">
-            </div>
-            <div class="icon-btn btn-delete">
-                <img class="icon" src="img/trash.svg">
+        <div class="col">
+            <div class="action">
+                <div class="icon-btn btn-edit">
+                    <img class="icon" src="img/icons/edit.svg">
+                </div>
+                <div class="icon-btn btn-delete">
+                    <img class="icon" src="img/icons/trash.svg">
+                </div>
             </div>
         </div>
     </div>
@@ -339,7 +360,7 @@
 
 <!-- Edit compoment -->
 <template id="template-edit-level">
-    <div class="editor-rework">
+    <div class="form editor-rework">
         <hgroup>
             <h3>Edit Lvl. <span id="level-edit">#</span></h3>
             <p>Use JSON codeblock below to edit level.</p>
@@ -349,6 +370,20 @@
         <div class="action">
             <button id="cancel-edit">Cancel</button>
             <button id="save-edit">Save</button>
+        </div>
+    </div>
+</template>
+
+<!-- Login component -->
+<template id="template-login">
+    <div class="form login-form">
+        <hgroup>
+            <h2>Login</h2>
+            <p>Enter the username you'd like to use (try to use the same please)!</p>
+        </hgroup>
+        <input type="text" id="login-username" placeholder="Username" autocomplete="off">
+        <div class="action">
+            <button id="login-btn">Login</button>
         </div>
     </div>
 </template>

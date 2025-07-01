@@ -183,7 +183,9 @@ function renderLevels() {
     pageLevels.forEach((level) => {
         const node = template.content.cloneNode(true).querySelector(".level-list-item");
         const values = node.querySelector(".component-data");
-        node.querySelector(".text").innerHTML = `<small>[Lvl. ${level._index + 1}] </small>${level.text}`;
+        node.querySelector(".text").innerHTML = level.text;
+
+        node.querySelector("small.lvl").textContent = `[Lvl. ${level._index + 1}]`;
 
         if (level.data) {
             Object.entries(level.data).forEach(([key, value]) => {
@@ -470,3 +472,41 @@ if (textInput && charCountDisplay) {
     textInput.addEventListener("input", updateCharCount);
     updateCharCount(); // Initial count
 }
+
+
+// Login
+function loginSetup() {
+    // Hide welcome message initially
+    document.querySelector(".welcome").style.display = "none";
+
+    // If already set
+    if (localStorage.getItem("odile-username")) {
+        document.querySelector(".welcome #username").textContent = `${localStorage.getItem("odile-username")}`;
+        document.querySelector(".welcome").style.display = null;
+    } else {
+        const templateLogin = document.getElementById("template-login");
+        const loginModalInstance = modal.create(templateLogin.content.cloneNode(true).querySelector(".login-form"));
+        loginModalInstance.show();
+
+        // Login action
+        document.getElementById("login-btn").addEventListener("click", () => {
+            const username = document.getElementById("login-username").value.trim();
+            if (!username) {
+                alert("Username cannot be empty.");
+                return;
+            }
+            localStorage.setItem("odile-username", username);
+            loginModalInstance.destroy();
+            document.querySelector(".welcome").style.display = null;
+            document.querySelector(".welcome #username").textContent = username;
+        });
+    }
+
+    // Logout action
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("odile-username");
+        loginSetup(); // Reinitialize login setup
+    });
+} 
+
+loginSetup();

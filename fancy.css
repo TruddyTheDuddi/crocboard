@@ -3,14 +3,15 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap'); */
 
 :root {
-    --text: #ffffff;
+    --text: #ebebeb;
     --text-faded: #777777;
 
     --text-panel: #aaaaaa;
     --panel: #404040;
-    --panel-dark: #292929;
+    --panel-dark: #232323;
 
     --background: #1a1a1a;
+    --background-dark: #111;
 
     --accent: #ff3dc5;
     --primary: #9d55dc;
@@ -26,16 +27,26 @@
 }
 
 body {
-    margin: 0;
+    margin: 2.5em;
     font-family: var(--text-font);
     line-height: 1.5;
-    background-color: var(--background);
+    background-color: var(--background-dark);
     color: var(--text);
     letter-spacing: -0.02em;
 }
 
 textarea {
     box-sizing: border-box;
+}
+
+a {
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent);
 }
 
 input,
@@ -133,8 +144,9 @@ h5 {
 
 h1 {
     font-family: Kablammo, var(--text-font);
-    font-size: 5em;
+    font-size: 4em;
     font-weight: normal;
+    color: yellowgreen;
 }
 
 h2 {
@@ -148,9 +160,8 @@ small {
 main {
     max-width: 70em;
     margin: 0 auto;
-    padding: 20px;
     display: grid;
-    gap: 2.5em;
+    gap: 4em;
 }
 
 kbd {
@@ -164,7 +175,7 @@ kbd {
 
 hgroup {
     display: grid;
-    gap: 0.5em;
+    gap: 0.75em;
 
     p {
         font-size: 0.9em;
@@ -265,10 +276,37 @@ img.icon {
 
 /* Element specific */
 header {
-    max-width: 40em;
-    display: grid;
-    gap: 1.5em;
-    font-size: 1.1em;
+    padding: 2em 0;
+    display: flex;
+    gap: 2em;
+    text-wrap: balance;
+    align-items: flex-end;
+
+    hgroup {
+        max-width: 40em;
+    }
+
+    aside {
+        flex: 1;
+        text-align: right;
+
+        .welcome{
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            gap: 0.5em;
+
+            .icon{
+                scale: 0.8;
+                cursor: pointer;
+                pointer-events: all;
+
+                &:hover{
+                    filter: invert(0.5);
+                }
+            }
+        }
+    }
 }
 
 .board-row {
@@ -312,9 +350,10 @@ header {
         display: grid;
         gap: 1em;
         padding: 1em;
-        border: 1.7px solid var(--panel);
+        border: 1.7px dashed var(--panel);
         margin-right: 4em;
         transition: border-color 0.2s;
+        background-color: var(--background-dark);
 
         hgroup {
             gap: 0.25em;
@@ -383,8 +422,12 @@ header {
 
     .level-list-item {
         display: flex;
-        gap: 1em;
+        gap: 2em;
         align-items: flex-start;
+        background-color: var(--background);
+        border: 1.7px solid var(--panel);
+        color: var(--text-panel);
+        padding: 0.75em;
 
         .content {
             flex: 1;
@@ -393,21 +436,20 @@ header {
 
             .text {
                 word-break: break-word;
+            }
 
-                small {
-                    font-size: 1em;
-                }
+            .text::before {
+                content: 'Text: ';
+                font-weight: bold;
             }
 
             .component-data {
                 display: grid;
                 gap: 0.5em;
-                font-size: 0.9em;
-                background-color: var(--panel-dark);
-                color: var(--text-panel);
-                padding: 1em;
+                font-size: 0.8em;
                 line-height: normal;
-                margin-left: 3.5em;
+                margin-left: 1em;
+                opacity: 0.5;
 
                 >div {
                     display: flex;
@@ -417,6 +459,14 @@ header {
 
                     .key {
                         font-weight: bold;
+                    }
+
+                    .key::after {
+                        content: ':';
+                    }
+
+                    .value {
+                        letter-spacing: -0.05em;
                     }
                 }
             }
@@ -438,17 +488,43 @@ header {
     }
 }
 
-.editor-rework{
+.form {
     display: grid;
     gap: 1.25em;
 
-    .action{
+    .action {
         display: flex;
         gap: 0.5em;
         justify-content: flex-end;
     }
 
-    textarea{
+    textarea {
+        font-size: 0.9em;
+    }
+}
+
+footer {
+    display: grid;
+    max-width: 36em;
+    font-size: 0.9em;
+    gap: 1em;
+    color: var(--text-faded);
+    line-height: normal;
+    text-wrap: balance;
+
+    .title {
+        font-family: Kablammo, var(--text-font);
+        font-size: 2em;
+        color: var(--text-panel);
+    }
+
+    .explain {
+        opacity: 0.5;
+    }
+
+    .links {
+        display: flex;
+        gap: 1.5em;
         font-size: 0.9em;
     }
 }
@@ -473,7 +549,8 @@ header {
         justify-self: center;
         background-color: var(--background);
         color: var(--text);
-        padding: 1em;
+        border: 1.7px solid var(--panel);
+        padding: 1.5em;
         max-width: 28em;
     }
 
