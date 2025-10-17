@@ -475,7 +475,7 @@ function loginSetup() {
         loginModalInstance.show();
 
         // Login action
-        document.getElementById("login-btn").addEventListener("click", () => {
+        const lg = () => {
             const username = document.getElementById("login-username").value.trim();
             if (!username) {
                 alert("Username cannot be empty.");
@@ -485,6 +485,18 @@ function loginSetup() {
             loginModalInstance.destroy();
             document.querySelector(".welcome").style.display = null;
             document.querySelector(".welcome #username").textContent = username;
+        }
+
+        document.getElementById("login-btn").addEventListener("click", () => {
+            lg();
+        });
+
+        // or on enter press of the input
+        document.getElementById("login-username").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                lg();
+            }
         });
     }
 

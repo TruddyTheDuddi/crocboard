@@ -51,7 +51,9 @@ I'm hosting the project on [Github Pages](https://truddytheduddi.github.io/crocb
 
 ### 3.1. Version
 
-**[v1.1]** - Removal of inital placehonlder data in the Levels Database. Also added the version logging on the Readme. Added links in footer.
+**[v1.2]** - Small UI tweaks and flow improvements.
+
+**[v1.1]** - Removal of initial placeholder data in the Levels Database. Also added the version logging on the Readme. Added links in footer.
 
 **[v1.0]** - Initial release of the dashboard!
 
