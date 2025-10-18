@@ -82,11 +82,12 @@ const component = {
                     error: getInputValue("btn-error-msg")
                 };
             case "text-static":
+                const answer = getInputValue("correct-answer");
                 return {
                     type: components.INPUT_STATIC,
                     placeholder: getInputValue("input-placeholder"),
                     submitText: getInputValue("submit-text"),
-                    answerValue: getInputValue("correct-answer"),
+                    answerValue: answer === null ? "" : answer,
                     error: getInputValue("error-msg")
                 };
             case "text-dynamic":
@@ -129,16 +130,14 @@ const component = {
                     return "A correct button must be selected.";
                 break;
             case components.INPUT_STATIC:
-                if (!component.answerValue)
-                    return "Correct answer is required.";
                 break;
             case components.INPUT_FUNCTION:
                 if (!component.answerFunction)
                     return "Function name is required.";
                 break;
             case components.TIMER:
-                if (!Number.isInteger(component.time) || component.time < 1)
-                    return "Time must be a positive number.";
+                if (!Number.isInteger(component.time) || component.time < 0)
+                    return "Time must be a non-negative number.";
                 break;
         }
 
@@ -146,7 +145,7 @@ const component = {
     }
 };
 
-const LEVELS_PER_PAGE = 20;
+const LEVELS_PER_PAGE = 30;
 let currentPage = 0;
 
 function renderLevels() {

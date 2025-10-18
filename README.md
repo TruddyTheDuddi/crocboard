@@ -51,6 +51,8 @@ I'm hosting the project on [Github Pages](https://truddytheduddi.github.io/crocb
 
 ### 3.1. Version
 
+**[v1.3]** - Break the pages number selector and make them wrap. Allow null answers for input components. Allow 0 seconds for timeout components. 30 levels per page instead of 20. Whew.
+
 **[v1.2]** - Small UI tweaks and flow improvements.
 
 **[v1.1]** - Removal of initial placeholder data in the Levels Database. Also added the version logging on the Readme. Added links in footer.

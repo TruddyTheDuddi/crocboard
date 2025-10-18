@@ -507,6 +507,7 @@ header {
 
 .levels-pages {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 
     .page {
